@@ -71,7 +71,7 @@ function Get-SlackChannelHistory {
 		[Parameter(Mandatory = $false)]
 		[Nullable[DateTime]] $oldest = $null,
 		[Parameter(Mandatory = $false)]
-		[switch] $inclusive = $true,
+		[switch] $inclusive = $false,
 		[ValidateRange(1,1000)] 
 		[Parameter(Mandatory = $false)]
 		[Nullable[int]] $count = $null,
@@ -120,7 +120,7 @@ function Get-SlackChannelHistory {
 	#todo : error handling
 }
 
-function Delete-SlackMessage {
+function Remove-SlackMessage {
 	[CmdletBinding()]
 	param (
 		[Parameter(Mandatory = $true)]
@@ -135,6 +135,7 @@ function Delete-SlackMessage {
 	$params =  @{"token" = $script:Slacktoken; "channel" = $channel; "ts" = $ts}
 	
 	Invoke-RestMethod -Method "Get" -Uri $uri -ContentType "Application/Json" -body $params
+	# todo : Error handling
 }
 
 
@@ -144,4 +145,4 @@ function Delete-SlackMessage {
 Export-ModuleMember -Function Get-SlackChannelHistory
 Export-ModuleMember -Function Set-SlackToken
 Export-ModuleMember -Function Get-SlackChannels
-Export-ModuleMember -Function Delete-SlackMessage
+Export-ModuleMember -Function Remove-SlackMessage
